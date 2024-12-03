@@ -1,13 +1,16 @@
 <script setup>
 import Footer from './components/Footer.vue';
 import NavBar from './components/NavBar.vue';
+
+const authRoutes = ['login', 'signup']
+
 </script>
 
 <template>
   <div class="min-h-screen flex flex-col justify-between">
-    <NavBar class="mb-4" v-if="$route.name != 'login'" />
+    <NavBar class="mb-4" v-if="!authRoutes.includes($route.name)" />
     <router-view />
-    <Footer class="mt-4" v-if="$route.name != 'login'" />
+    <Footer class=" mt-4" v-if="!authRoutes.includes($route.name)" />
   </div>
 </template>
 

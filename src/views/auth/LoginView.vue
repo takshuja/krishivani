@@ -63,8 +63,8 @@
 
             <!-- Signup Button -->
             <div class="signup-btn mt-4">
-                <button type="submit"
-                    class="border-2 bg-white text-black border-black w-full rounded-full py-2 text-xl font-medium">Sign
+                <button type="submit" @click="$router.push('/auth/signup')" class=" border-2 bg-white text-black border-black w-full rounded-full py-2 text-xl
+                    font-medium">Sign
                     up</button>
             </div>
         </form>
