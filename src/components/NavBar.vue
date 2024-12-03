@@ -9,7 +9,7 @@
         </div>
         <div class="nav-links flex gap-4">
             <router-link to="about">About</router-link>
-            <router-link to="">Contact</router-link>
+            <router-link to="/auth/login">Login</router-link>
             <router-link to="">Support</router-link>
         </div>
     </nav>
