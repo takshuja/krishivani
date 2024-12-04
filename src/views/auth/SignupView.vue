@@ -79,8 +79,6 @@
                         class="border bg-[#bbb] text-white border-gray-300 w-3/5 rounded-full py-2 text-md">Create an
                         account</button>
                 </div>
-
-
             </form>
 
             <div class="m-auto hidden lg:block">
@@ -101,16 +99,7 @@ const hideToggleText = ref('Show')
 const inputType = ref('password');
 function togglePassword() {
     isChecked.value = !isChecked.value
-
     inputType.value = isChecked.value ? "text" : "password";
-    // if (isChecked.value) {
-    //     isChecked.value = !isChecked.value;
-    //     inputType.value = "text"
-    // } else {
-    //     isChecked = "fa-solid fa-eye-slash"
-    //     hideToggleText.value = "Hide"
-    //     inputType.value = "password"
-    // }
 }
 
 </script>

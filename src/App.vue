@@ -1,6 +1,7 @@
 <script setup>
 import Footer from './components/Footer.vue';
 import NavBar from './components/NavBar.vue';
+import NV_RESP from './components/Nav_Mobile.vue';
 
 const authRoutes = ['login', 'signup']
 
@@ -9,6 +10,7 @@ const authRoutes = ['login', 'signup']
 <template>
   <div class="min-h-screen flex flex-col justify-between">
     <NavBar class="mb-4" v-if="!authRoutes.includes($route.name)" />
+    <NV_RESP />
     <router-view />
     <Footer class=" mt-4" v-if="!authRoutes.includes($route.name)" />
   </div>
@@ -27,10 +29,6 @@ nav {
   padding: 30px;
 }
 
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
 
 nav a.router-link-exact-active {
   color: #42b983;
@@ -39,5 +37,10 @@ nav a.router-link-exact-active {
 
 .logo-text {
   color: #42b983;
+}
+
+
+nav a.router-link-exact-active {
+  color: #AFFC41;
 }
 </style>
