@@ -6,10 +6,11 @@
             <!-- Name and email -->
             <div class="grid grid-rows-2 text-start">
                 <div class="name text-2xl md:text-3xl text-red-700 font-extrabold">
-                    John Doe
+                    {{ userDetails == null ? 'Loading...' : userDetails.firstname + ' ' + userDetails.lastname }}
                 </div>
                 <div class="mail font-bold text-md md:text-lg">
-                    johndoe@example.com
+                    {{ userDetails == null ? 'Loading...' : userDetails.email }}
+                    <!-- {{ currentUser ? (currentUser.email ?? 'johndoe@example.com') : 'Loading' }} -->
                 </div>
             </div>
 
@@ -18,9 +19,9 @@
 
             <!-- Articles status -->
             <div class="text-start text-sm md:text-base">
-                <div>Articles uploaded: {{ user.articles.status.uploaded }}</div>
-                <div>Articles under review: {{ user.articles.status.review }}</div>
-                <div>Articles published: {{ user.articles.status.published }}</div>
+                <div>Articles uploaded: {{ user_details.articles.status.uploaded }}</div>
+                <div>Articles under review: {{ user_details.articles.status.review }}</div>
+                <div>Articles published: {{ user_details.articles.status.published }}</div>
             </div>
         </div>
 
@@ -41,7 +42,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="article in user.articles.articles" :key="article.id" class="even:bg-gray-100">
+                    <tr v-for="article in user_details.articles.articles" :key="article.id" class="even:bg-gray-100">
                         <td class="px-4 py-2">{{ article.name }}</td>
                         <td class="px-4 py-2">{{ article.id }}</td>
                         <td class="px-4 py-2">{{ article.status.toUpperCase() }}</td>
@@ -54,44 +55,88 @@
                 </tbody>
             </table>
         </div>
+
+
+        <!-- Note -->
+        <div class="border-2 border-rose-950 my-8 text-red-800 text-lg text-start p-4">
+            <b>Note*</b>: If you've recently uploaded an article or made any payments, it will be reflected in your
+            profile within 24 hours.
+        </div>
     </div>
 </template>
 
-<script setup>
-const user = {
-    articles: {
-        status: {
-            uploaded: 5,
-            review: 3,
-            published: 2,
-        },
-        articles: [
-            {
-                name: 'Example Article 1',
-                id: 'G-221-34',
-                status: 'review',
-                payment_status: 'Pending',
-                remarks: null,
-                url: 'https://example.com',
-            },
-            {
-                name: 'Example Article 2',
-                id: 'G-221-56',
-                status: 'accepted',
-                payment_status: 'Successful',
-                remarks: null,
-                url: 'https://example.com',
-            },
-            {
-                name: 'Example Article 3',
-                id: 'G-221-34',
-                status: 'rejected',
-                payment_status: 'Successful',
-                remarks: 'Plagiarism exceeds 20%',
-                url: 'https://example.com',
-            },
-        ],
+
+<script>
+import { authStore } from '@/stores/authStore';
+
+export default {
+    setup() {
+        const store = authStore();
+        return { store };
     },
+    data() {
+        return {
+            user_details: {
+                articles: {
+                    status: {
+                        uploaded: 5,
+                        review: 3,
+                        published: 2,
+                    },
+                    articles: [
+                        {
+                            name: 'Example Article 1',
+                            id: 'G-221-34',
+                            status: 'review',
+                            payment_status: 'Pending',
+                            remarks: null,
+                            url: 'https://example.com',
+                        },
+                        {
+                            name: 'Example Article 2',
+                            id: 'G-221-56',
+                            status: 'accepted',
+                            payment_status: 'Successful',
+                            remarks: null,
+                            url: 'https://example.com',
+                        },
+                        {
+                            name: 'Example Article 3',
+                            id: 'G-221-34',
+                            status: 'rejected',
+                            payment_status: 'Successful',
+                            remarks: 'Plagiarism exceeds 20%',
+                            url: 'https://example.com',
+                        },
+                    ],
+                },
+            },
+            user: null,
+            userData: {},
+
+        };
+    },
+    methods: {
+        printUser() {
+            console.log(this.user);
+        },
+    },
+    async mounted() {
+        if (this.store.user == null) await this.store.getAuthStatus();
+        if (this.store.userData == null) await this.store.getUser(this.store.user.email);
+        this.user = this.store.user;
+        this.userData = this.store.userData;
+        // this.store.getUser(this.currentUser.uid);
+    },
+
+    computed: {
+        currentUser() {
+            return this.store.user;
+        },
+        userDetails() {
+            return this.userData;
+        }
+    }
 };
 </script>
 

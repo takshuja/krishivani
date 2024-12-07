@@ -2,15 +2,14 @@
     <div class="my-auto">
         <div
             class="lg:grid lg:grid-cols-2 px-5 lg:w-1/2 md:mx-auto lg:border-[0.15rem] lg:py-20 lg:px-10 lg:rounded-3xl">
-            <form @submit.prevent="console.log('Button pressed')" class=" flex flex-col ">
+            <form @submit.prevent="signUpWithEmailAndPassword" class=" flex flex-col ">
                 <!-- Sign up Page Title -->
                 <div class="login-heading text-start font-poppins font-large text-xl my-4 lg:text-3xl">
                     Create an account
                 </div>
 
                 <div class="text-start">
-                    <label>Already have an account? <u @click="$router.push('/auth/login')"
-                            class="hover:cursor-pointer">Log
+                    <label>Already have an account? <u @click="$router.push('/login')" class="hover:cursor-pointer">Log
                             in</u></label>
                 </div>
 
@@ -22,13 +21,15 @@
                         <label for="first-name">
                             First name
                         </label>
-                        <input type="text" name="first-name" class="border-2 py-1 border-gray-300 rounded-md p-2">
+                        <input type="text" v-model="firstname" name="first-name"
+                            class="border-2 py-1 border-gray-300 rounded-md p-2">
                     </div>
                     <div class="text-start flex flex-col gap-1 text-lg text-[#999]">
                         <label for="last-name">
                             Last name
                         </label>
-                        <input type="text" name="last-name" class="border-2 py-1 border-gray-300 rounded-md p-2">
+                        <input type="text" v-model="lastname" name="last-name"
+                            class="border-2 py-1 border-gray-300 rounded-md p-2">
                     </div>
                 </div>
 
@@ -37,7 +38,8 @@
                 <div class="input-fields flex flex-col gap-3 mt-3">
                     <div class="input-field flex flex-col text-start">
                         <label for="email">Email address</label>
-                        <input type="email" name="email" class="border-2 border-l-gray-300 rounded-md p-2 h-10">
+                        <input type="email" v-model="email" name="email"
+                            class="border-2 border-l-gray-300 rounded-md p-2 h-10">
                     </div>
 
                     <div class="input-field flex flex-col text-start gap-3">
@@ -46,14 +48,19 @@
                             <label for="password">
                                 Password
                             </label>
-                            <input :type="inputType" name="password"
+                            <input :type="inputType" name="password" v-model="password"
                                 class="border-2 border-l-gray-300 rounded-md p-2 h-10">
                         </div>
 
                         <div class="flex flex-col">
                             <label for="confirm-pw">Confirm Password</label>
-                            <input :type="inputType" name="confirm-pw"
+                            <input :type="inputType" name="confirm-pw" v-model="confirmPw"
                                 class="border-2 border-l-gray-300 rounded-md p-2 h-10">
+
+                            <!-- Error Message -->
+                            <div v-if="authMessage" class="error-message text-red-500 text-sm mt-2">
+                                {{ authMessage }}
+                            </div>
                         </div>
                         <div class="mt-4">
                             <span class="text-[#999]">Use 8 or more characters with a mix of letters, numbers and
@@ -71,13 +78,16 @@
                 </div>
 
 
-                <!-- Login Button -->
+                <!-- Signup Button -->
                 <div class="submit-btn mt-8 flex flex-row justify-between items-center">
-                    <div><u @click="$router.push('/auth/login')" class="hover:cursor-pointer">log in
-                            instead</u></div>
-                    <button type="submit"
-                        class="border bg-[#bbb] text-white border-gray-300 w-3/5 rounded-full py-2 text-md">Create an
-                        account</button>
+                    <button type="submit" :disabled="signupDisabled"
+                        :class="(signupDisabled) ? '' : 'hover:bg-black hover:text-white'"
+                        class="border bg-[#bbb] text-white border-gray-300 w-3/5 rounded-full py-2 text-md">
+                        <label v-if="!signupDisabled">Create account</label>
+                        <div class="justify-center items-center" :class="signupDisabled ? 'flex' : 'hidden'">
+                            <LoaderCircle />
+                        </div>
+                    </button>
                 </div>
             </form>
 
@@ -89,17 +99,89 @@
     </div>
 </template>
 
-<script setup>
-import { ref } from 'vue';
 
 
-// const passwordClassName = ref("fa-solid fa-eye")
-const isChecked = ref(false);
-const hideToggleText = ref('Show')
-const inputType = ref('password');
-function togglePassword() {
-    isChecked.value = !isChecked.value
-    inputType.value = isChecked.value ? "text" : "password";
+<script>
+import { authStore } from '@/stores/authStore';
+import { useRouteStore } from '@/stores/routeStore';
+import { checkPassword } from '@/utils';
+
+
+export default {
+    setup() {
+        const store = authStore();
+        return { store }
+    },
+    data() {
+        return {
+
+            isChecked: false,
+            inputType: 'password',
+            firstname: '',
+            lastname: '',
+            email: '',
+            password: '',
+            confirmPw: '',
+            authMessage: '',
+            user: null,
+            signupDisabled: false,
+        }
+    },
+
+    methods: {
+
+
+
+        async signUpWithEmailAndPassword() {
+            const checkPw = checkPassword(this.password, this.confirmPw);
+            if (!checkPw.is_valid) {
+                console.error(checkPw.msg);
+                return;
+            }
+            try {
+                this.signupDisabled = true;
+                await this.store.signUp(this.firstname, this.lastname, this.email, this.password)
+                if (this.store.user) {
+                    this.user = this.store.user;
+                    this.$router.push(useRouteStore().nextRoute || '/');
+                }
+
+            } catch (error) {
+                this.signupDisabled = false;
+                switch (error.code) {
+                    case "auth/email-already-in-use":
+                        this.authMessage = "The email address is already in use by another account.";
+                        break;
+                    case "auth/invalid-email":
+                        this.authMessage = "The email address is badly formatted.";
+                        break;
+                    case "auth/operation-not-allowed":
+                        this.authMessage = "Email/password accounts are not enabled. Enable them in the Firebase Console.";
+                        break;
+                    case "auth/weak-password":
+                        this.authMessage = "The password must be at least 6 characters long.";
+                        break;
+                    case "auth/network-request-failed":
+                        this.authMessage = "A network error occurred. Please check your internet connection.";
+                        break;
+                    case "auth/internal-error":
+                        this.authMessage = "An internal error occurred. Try again later.";
+                        break;
+                    case "auth/too-many-requests":
+                        this.authMessage = "Too many attempts. Please try again later.";
+                        break;
+                    default:
+                        this.authMessage = `An unknown error occurred: ${error.message}`;
+                }
+
+            }
+        },
+        togglePassword() {
+            this.isChecked = !this.isChecked
+            this.inputType = this.isChecked ? "text" : "password"
+        }
+    }
+
 }
 
 </script>

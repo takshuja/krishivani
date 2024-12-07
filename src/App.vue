@@ -1,9 +1,19 @@
 <script setup>
+import { onMounted } from 'vue';
 import Footer from './components/Footer.vue';
 import NavBar from './components/NavBar.vue';
 import NV_RESP from './components/Nav_Mobile.vue';
+import { authStore } from './stores/authStore';
 
 const authRoutes = ['login', 'signup']
+
+const authenticationStore = authStore()
+
+
+
+onMounted(() => {
+  authenticationStore.getAuthStatus();
+})
 
 </script>
 
@@ -35,6 +45,10 @@ nav a.router-link-exact-active {
 }
 
 
+nav a:hover {
+  color: #AFFC41;
+}
+
 .logo-text {
   color: #42b983;
 }
@@ -42,5 +56,29 @@ nav a.router-link-exact-active {
 
 nav a.router-link-exact-active {
   color: #AFFC41;
+}
+
+
+
+loadercircle {
+  width: 2rem;
+  height: 2rem;
+  border: 0.15rem solid black;
+  border-radius: 50%;
+  border-top-color: transparent;
+  animation: loading-animation 1s linear infinite;
+}
+
+
+
+@keyframes loading-animation {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+
+  }
 }
 </style>

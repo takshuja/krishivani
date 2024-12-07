@@ -11,6 +11,7 @@ module.exports = {
     extend: {},
   },
   plugins: [],
-  darkMode: false,
+  // darkMode: false,
+  media: false,
 }
 
