@@ -62,7 +62,7 @@ export default {
         async logout() {
             await this.store.logout();
             // useRouter().clearRoutes();
-            useRouter().push('/');
+            this.$router.push('/');
         }
     }
 }
