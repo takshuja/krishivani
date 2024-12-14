@@ -32,7 +32,7 @@
                 </ul>
             </div>
             <div class="upload-btn text-white lg:text-xl font-bold hover:cursor-pointer">
-                <button
+                <button @click="$router.push('/upload')"
                     class="bg-[#A59A49] px-6 py-1 rounded-3xl transition duration-300 ease-in-out transform hover:scale-105  ">
                     <span class="fa-solid fa-arrow-up-from-bracket border  rounded-full p-[0.5rem] px-[0.6rem]"></span>
                     <label class="px-4">UPLOAD ARTICLE</label>

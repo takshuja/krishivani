@@ -64,11 +64,12 @@ export const authStore = defineStore('authStore', {
 
             const collectionName = "users";
             const docId = this.user.email;
+            const uid = this.user.uid;
             const data = {
-                uid: docId,
+                uid: uid,
                 firstname: firstname,
                 lastname: lastname,
-                email: email,
+                email: docId,
                 createdAt: new Date(),
             };
 

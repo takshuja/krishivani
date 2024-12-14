@@ -4,9 +4,10 @@
             <router-link to="/"><label class="logo-text text-white font-light text-3xl">K R I S H I V A N
                     I</label></router-link>
         </div>
-        <div class="nav-links flex gap-10 items-center justify-between w-1/2 text-md">
+        <div class="nav-links flex gap-10 items-center justify-between w-fit text-md">
             <router-link to="/">Home</router-link>
-            <router-link to="/upload">Upload Article</router-link>
+            <router-link to="/instructions">Instructions</router-link>
+            <router-link to="/upload">Upload</router-link>
             <router-link to="/">Publications</router-link>
             <router-link to="about">About</router-link>
             <!-- Search Input -->
@@ -17,7 +18,7 @@
             </div>
 
             <!-- Profile icon -->
-            <div class="hover:cursor-pointer" v-if="isLoggedIn">
+            <div class="hover:cursor-pointer flex " v-if="isLoggedIn">
                 <router-link :to="{ name: 'profile' }"><i title="profile"
                         class="fa-solid fa-user text-xl border-2 border-white px-2 pt-1 rounded-md"></i></router-link>
 
@@ -28,7 +29,6 @@
             </div>
             <div v-else>
                 <router-link :to="{ name: 'login' }">Login</router-link>
-
             </div>
 
         </div>
@@ -48,7 +48,6 @@ export default {
     },
     async mounted() {
         if (this.store.user == null) await this.store.user;
-        // this.isLoggedIn = this.store.isAuthenticated;
     },
 
 
@@ -61,7 +60,6 @@ export default {
     methods: {
         async logout() {
             await this.store.logout();
-            // useRouter().clearRoutes();
             this.$router.push('/');
         }
     }

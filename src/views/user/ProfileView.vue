@@ -108,12 +108,27 @@ export default {
                             remarks: 'Plagiarism exceeds 20%',
                             url: 'https://example.com',
                         },
+                        {
+                            name: 'Example Article 4',
+                            id: 'G-221-39',
+                            status: 'rejected',
+                            payment_status: 'Pending',
+                            remarks: '-',
+                            url: 'https://example.com',
+                        },
+                        {
+                            name: 'Example Article 5',
+                            id: 'G-224-102',
+                            status: 'accepted',
+                            payment_status: 'Successful',
+                            remarks: 'Plagiarism exceeds 20%',
+                            url: 'https://example.com',
+                        },
                     ],
                 },
             },
             user: null,
             userData: {},
-
         };
     },
     methods: {
