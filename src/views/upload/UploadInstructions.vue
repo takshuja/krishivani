@@ -32,7 +32,7 @@
                 </ul>
             </div>
             <div class="upload-btn text-white lg:text-xl font-bold hover:cursor-pointer">
-                <button @click="$router.push('/upload')"
+                <button @click="scrollToSection('#submission')"
                     class="bg-[#A59A49] px-6 py-1 rounded-3xl transition duration-300 ease-in-out transform hover:scale-105  ">
                     <span class="fa-solid fa-arrow-up-from-bracket border  rounded-full p-[0.5rem] px-[0.6rem]"></span>
                     <label class="px-4">UPLOAD ARTICLE</label>
@@ -61,6 +61,21 @@
     </div>
 </template>
 
+
+<script>
+export default {
+    methods: {
+        scrollToSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (section) {
+                section.scrollIntoView(
+                    { behavior: 'smooth' }
+                )
+            }
+        }
+    }
+}
+</script>
 
 <style lang="css" scoped>
 .format {

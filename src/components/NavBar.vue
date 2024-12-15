@@ -5,11 +5,9 @@
                     I</label></router-link>
         </div>
         <div class="nav-links flex gap-10 items-center justify-between w-fit text-md">
-            <router-link to="/">Home</router-link>
-            <router-link to="/instructions">Instructions</router-link>
-            <router-link to="/upload">Upload</router-link>
-            <router-link to="/">Publications</router-link>
-            <router-link to="about">About</router-link>
+            <router-link v-for="route in navroutes" :to="{ name: route.name }">
+                {{ route.label }}
+            </router-link>
             <!-- Search Input -->
             <div class="flex">
                 <input type="search" placeholder=" &#x1F50D; Search article"
@@ -37,13 +35,14 @@
 
 <script>
 import { authStore } from '@/stores/authStore';
-import { useRouter } from 'vue-router';
+import { navRoutes } from '@/utils/routes';
 
 export default {
     data() {
         return {
             isLoggedIn: false,
             store: authStore(),
+            navroutes: navRoutes,
         }
     },
     async mounted() {

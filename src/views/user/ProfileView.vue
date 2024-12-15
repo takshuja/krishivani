@@ -10,7 +10,6 @@
                 </div>
                 <div class="mail font-bold text-md md:text-lg">
                     {{ userDetails == null ? 'Loading...' : userDetails.email }}
-                    <!-- {{ currentUser ? (currentUser.email ?? 'johndoe@example.com') : 'Loading' }} -->
                 </div>
             </div>
 
@@ -141,7 +140,6 @@ export default {
         if (this.store.userData == null) await this.store.getUser(this.store.user.email);
         this.user = this.store.user;
         this.userData = this.store.userData;
-        // this.store.getUser(this.currentUser.uid);
     },
 
     computed: {

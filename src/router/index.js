@@ -6,7 +6,8 @@ import ProfileView from '@/views/user/ProfileView.vue'
 import { authStore } from '@/stores/authStore'
 import UploadArticleView from '@/views/upload/UploadInstructions.vue'
 import { useRouteStore } from '@/stores/routeStore'
-import UploadPage from '@/views/upload/UploadPage.vue'
+import UploadPage from '@/views/upload/Submission.vue'
+import AboutView from '../views/AboutView.vue'
 
 const routes = [
   {
@@ -38,9 +39,15 @@ const routes = [
     meta: { requiresAuth: true },
   },
   {
-    path: '/upload',
-    name: 'upload',
+    path: '/submission',
+    name: 'submission',
     component: UploadPage,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: '/publications',
+    name: 'publications',
+    component: AboutView,
     meta: { requiresAuth: true },
   },
   {

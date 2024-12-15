@@ -14,12 +14,17 @@
             <!-- List Items -->
             <div class="my-8">
                 <ul class="text-start text-lg">
-                    <li><router-link :to="{ name: 'home' }">Home</router-link></li>
+                    <li v-for="route in navroutes">
+                        <router-link :to="{ name: route.name }">
+                            {{ route.label }}
+                        </router-link>
+                    </li>
+                    <!-- <li><router-link :to="{ name: 'home' }">Home</router-link></li>
                     <li><router-link :to="{ name: 'instructions' }">Instructions</router-link></li>
-                    <li><router-link :to="{ name: 'upload' }">Upload</router-link></li>
+                    <li><router-link :to="{ name: 'submission' }">Submission</router-link></li>
                     <li><router-link :to="{ name: 'home' }">Publications</router-link></li>
                     <li><router-link :to="{ name: 'about' }">About</router-link></li>
-                    <li><router-link :to="{ name: 'home' }">Contact</router-link></li>
+                    <li><router-link :to="{ name: 'home' }">Contact</router-link></li> -->
                 </ul>
             </div>
 
@@ -53,6 +58,7 @@
 
 <script>
 import { authStore } from '@/stores/authStore';
+import { navRoutes } from '@/utils/routes';
 
 export default {
     data() {
@@ -62,6 +68,7 @@ export default {
             nav_expanded: "flex",
             expanded_nav: "hidden",
             isExpanded: false,
+            navroutes: navRoutes,
         }
     },
     async mounted() {
