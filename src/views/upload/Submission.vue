@@ -1,7 +1,5 @@
 <template>
 
-    <UploadInstructions />
-
 
     <div class="my-8 px-8 lg:w-3/4 lg:mx-auto" id="#submission">
         <div class="instructions bg-[#78AD2C] text-white font-bold px-4 py-5 rounded-3xl lg:text-3xl">
@@ -97,11 +95,10 @@
 
 <script>
 import DropdownMenu from "@/components/DropdownMenu.vue";
-import UploadInstructions from "./UploadInstructions.vue";
 
 
 export default {
-    components: { DropdownMenu, UploadInstructions },
+    components: { DropdownMenu },
     data() {
         return {
             formData: {
