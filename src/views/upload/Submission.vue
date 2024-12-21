@@ -63,12 +63,6 @@
                 </label>
                 <input type="file" @change="handleFileUpload" accept=".docx" class="my-2">
                 <p v-if="errors.fileError" class="error">{{ errors.fileError }}</p>
-                <!-- <button type="button" @click="uploadFile" :disabled="uploadDisabled"
-                    :class="uploadDisabled ? 'disabled' : 'hover:text-white hover:bg-[#1A73E8]'"
-                    class="my-1 border-2 rounded-md py-2 px-4 text-[#1A73E8] w-fit disabled:text-gray-400">
-                    <i class="fa-solid fa-arrow-up-from-bracket px-2"></i>
-                    Upload
-                </button> -->
             </div>
 
             <!-- Declaration -->

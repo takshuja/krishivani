@@ -2,6 +2,7 @@ import { defineStore } from "pinia";
 import { firebase_auth, firebase_firestore } from '@/firebase'
 import { getDoc, doc, setDoc } from "firebase/firestore";
 import { browserLocalPersistence, createUserWithEmailAndPassword, GoogleAuthProvider, setPersistence, signInWithEmailAndPassword } from "firebase/auth";
+import { deleteUser } from "firebase/auth";
 
 
 export const authStore = defineStore('authStore', {
@@ -126,6 +127,17 @@ export const authStore = defineStore('authStore', {
                 this.authStatus = false;
             } catch (err) {
                 console.error('ERROR signing out: ', err.msg);
+            }
+        },
+
+
+        async deleteUser(uid) {
+            try {
+
+                console.log(user);
+                // await deleteUser(user);
+            } catch (err) {
+                console.error(err.msg)
             }
         }
 

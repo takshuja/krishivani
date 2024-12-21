@@ -9,6 +9,8 @@ import { useRouteStore } from '@/stores/routeStore'
 import UploadPage from '@/views/upload/Submission.vue'
 import AboutView from '../views/AboutView.vue'
 import UploadInstructions from '@/views/upload/UploadInstructions.vue'
+import UserDashboard from '@/views/admin/UserDashboardOld.vue'
+import Dashboard from '@/views/admin/AdminPanel.vue'
 
 const routes = [
   {
@@ -52,6 +54,15 @@ const routes = [
     component: AboutView,
     meta: { requiresAuth: true },
   },
+
+  {
+    path: '/admin',
+    name: 'admin',
+    component: Dashboard,
+    meta: { requiresAuth: false },
+  },
+
+
   {
     path: '/about',
     name: 'about',
