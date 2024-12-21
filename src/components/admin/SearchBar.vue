@@ -21,12 +21,6 @@ import UsersList from './UsersList.vue';
 
 export default {
 
-    created() {
-        console.table({
-            page: this.page,
-        })
-    },
-
     props: {
         enableUpdate: {
             type: Boolean,

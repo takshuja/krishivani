@@ -9,7 +9,7 @@
         <ManageArticles v-show="activeTab == 'articles'" />
 
 
-        
+
 
     </div>
 
@@ -35,8 +35,6 @@ export default {
 
     created() {
         this.activeTab = this.store.activeTab;
-        console.log(this.activeTab);
-        console.log(this.activeTab == 'dashboard')
     },
 
     components: {
