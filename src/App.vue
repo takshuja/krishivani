@@ -19,7 +19,7 @@ onMounted(() => {
 
 <template>
   <div class="min-h-screen flex flex-col justify-between">
-    <NavBar class="mb-4" v-if="!authRoutes.includes($route.name)" />
+    <NavBar class="mb-0" v-if="!authRoutes.includes($route.name)" />
     <NV_RESP />
     <router-view />
     <Footer class=" mt-4" v-if="!authRoutes.includes($route.name)" />

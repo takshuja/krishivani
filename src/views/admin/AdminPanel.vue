@@ -1,18 +1,10 @@
 <template>
-
-
     <div class="flex">
         <Sidebar class="w-1/4" />
-
         <UserDashboard v-show="activeTab == 'dashboard'" />
         <UserDetails v-show="activeTab == 'details'" />
         <ManageArticles v-show="activeTab == 'articles'" />
-
-
-
-
     </div>
-
 </template>
 
 
@@ -22,9 +14,6 @@ import Sidebar from '@/components/admin/Sidebar.vue';
 import UserDashboard from '@/components/admin/UserDashboard.vue';
 import UserDetails from '@/components/admin/UserDetails.vue';
 import { adminStore } from '@/stores/adminStore';
-
-
-
 
 export default {
 

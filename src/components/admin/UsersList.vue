@@ -101,7 +101,8 @@ export default {
         },
 
         async deleteUser() {
-            this.authstore.deleteUser('sssss')
+            // TODO: Implement it on the server side and
+            // then make a fetch request
         }
     },
     computed: {

@@ -22,7 +22,6 @@
                     <span class="truncate" :title="user.email">{{ user.uploaded ?? 0 }}</span>
                     <span class="truncate" :title="user.email">{{ user.review ?? 0 }}</span>
                     <span class="truncate" :title="user.email">{{ user.published ?? 0 }}</span>
-                    <!-- <span class="truncate" :title="user.lastname">{{ user.lastname }}</span> -->
                 </div>
             </li>
         </ul>
@@ -34,7 +33,6 @@
 export default {
     props: {
         filteredUsers: {
-
             required: true,
         }
     }

@@ -70,7 +70,6 @@ export default {
     },
     methods: {
         async addUser() {
-
             try {
                 await this.store.signUp(
                     this.newUser.firstname,
@@ -82,8 +81,6 @@ export default {
                 console.error(e.msg)
             }
 
-            // console.log('New User Data:', this.newUser);
-            // this.newUser = { firstname: '', lastname: '', email: '', password: '' };
             this.closePopup()
         },
         closePopup() {
