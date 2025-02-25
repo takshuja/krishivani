@@ -15,9 +15,49 @@
     </div>
 </template>
 
-<script>
+<script setup lang="js">
 import CreateUserPopup from './CreateUserPopup.vue';
 import UsersList from './UsersList.vue';
+import { reactive, ref } from 'vue';
+
+
+const props = defineProps({
+    enableUpdate: {
+        type: Boolean,
+        default: false,
+    },
+    page: {
+        type: String,
+        default: 'dashboard'
+    }
+})
+
+const searchQuery = ref('')
+const popupShown = ref(false)
+const newUser = reactive({
+    firstname: '',
+    lastname: '',
+    email: '',
+    password: '',
+})
+
+function addUser() {
+    console.log('New User Data:', this.newUser);
+
+    // Handle user addition logic here (e.g., API call or updating store)
+
+    // Reset the form and close popup
+    newUser = { firstname: '', lastname: '', email: '', password: '' };
+    popupShown.value = false;
+}
+
+function handlePopupVisibility(value) {
+    popupShown.value = value;
+}
+</script>
+<!--
+<script>
+
 
 export default {
 
@@ -62,4 +102,4 @@ export default {
         }
     },
 };
-</script>
+</script> -->

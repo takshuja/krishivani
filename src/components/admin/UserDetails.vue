@@ -9,13 +9,6 @@
 </template>
 
 
-<script>
+<script setup lang="js">
 import SearchBar from './SearchBar.vue';
-
-export default {
-    components: {
-        SearchBar
-    },
-}
-
 </script>

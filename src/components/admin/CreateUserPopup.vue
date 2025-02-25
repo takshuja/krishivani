@@ -49,49 +49,48 @@
 </template>
 
 
-<script>
-import { authStore } from '@/stores/authStore';
 
-export default {
-    props: ['popupShown'],
-    setup() {
-        const store = authStore();
-        return { store };
-    },
-    data() {
-        return {
-            newUser: {
-                firstname: '',
-                lastname: '',
-                email: '',
-                password: '',
-            },
-        }
-    },
-    methods: {
-        async addUser() {
-            try {
-                await this.store.signUp(
-                    this.newUser.firstname,
-                    this.newUser.lastname,
-                    this.newUser.email,
-                    this.newUser.password,
-                )
-            } catch (e) {
-                console.error(e.msg)
-            }
+<script setup lang="js">
 
-            this.closePopup()
-        },
-        closePopup() {
-            this.$emit('popupShown', false);
-        }
-    },
+import { authStore } from "@/stores/authStore";
+import { computed, reactive } from "vue";
 
-    computed: {
-        isPopupShown() {
-            return this.popupShown;
-        }
+
+const store = authStore();
+const emit = defineEmits(['popupShown'])
+const newUser = reactive({
+    firstname: '',
+    lastname: '',
+    email: '',
+    password: '',
+})
+
+
+const props = defineProps({
+    popupShown: Boolean,
+})
+
+
+const isPopupShown = computed(() => props.popupShown);
+
+
+function closePopup() {
+    emit('popupShown', false);
+}
+
+
+async function addUser() {
+    try {
+        store.signUp(
+            newUser.firstname,
+            newUser.lastname,
+            newUser.email,
+            newUser.password
+        )
+    } catch (error) {
+        console.error(error.msg)
+    } finally {
+        closePopup()
     }
 }
 

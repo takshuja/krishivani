@@ -1,9 +1,6 @@
 <template>
     <div class="flex justify-between h-screen bg-gray-100 px-8 py-12">
 
-
-
-
         <!-- Sidebar -->
         <div class="w-full bg-[#111828] text-wtite text-center rounded-3xl flex flex-col justify-between">
 
@@ -47,36 +44,47 @@
 </template>
 
 
-<script>
+<script setup lang="js">
 import { adminStore } from '@/stores/adminStore';
+import { ref, computed } from 'vue';
+const store = adminStore()
 
+const activeTab = ref(store.activeTab);
 
-export default {
+const getActiveTab = computed(() => store.activeTab);
 
-    setup() {
-        const store = adminStore();
-        return { store };
-    },
-
-    data() {
-        return {
-            activeTab: this.store.activeTab,
-        }
-    },
-
-    computed: {
-        getActiveTab() {
-            return this.store.activeTab;
-        }
-    },
-    methods: {
-        setActiveTab(tabName) {
-            if (tabName == this.activeTab) return;
-            this.activeTab = tabName;
-            this.store.activeTab = this.activeTab;
-        }
-    }
+function setActiveTab(tabName) {
+    if (tabName == activeTab.value) return;
+    activeTab.value = tabName;
+    store.activeTab = activeTab.value;
 }
+
+// export default {
+
+//     setup() {
+//         const store = adminStore();
+//         return { store };
+//     },
+
+//     data() {
+//         return {
+//             activeTab: this.store.activeTab,
+//         }
+//     },
+
+//     computed: {
+//         getActiveTab() {
+//             return this.store.activeTab;
+//         }
+//     },
+//     methods: {
+//         setActiveTab(tabName) {
+//             if (tabName == this.activeTab) return;
+//             this.activeTab = tabName;
+//             this.store.activeTab = this.activeTab;
+//         }
+//     }
+// }
 
 
 </script>

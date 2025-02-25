@@ -1,10 +1,10 @@
 <template>
     <div class="info-card flex flex-col items-start py-8 px-4 rounded-lg w-1/3 gap-4">
         <span class="text-xl font-medium">
-            {{ heading }}
+            {{ props.heading }}
         </span>
 
-        <span class="text-[#AFA68B] text-4xl font-medium">{{ data }}</span>
+        <span class="text-[#AFA68B] text-4xl font-medium">{{ props.data }}</span>
     </div>
 </template>
 
@@ -15,13 +15,10 @@
 }
 </style>
 
-<script>
-
-export default {
-    props: [
-        'heading',
-        'data',
-    ]
-}
+<script setup lang="js">
+const props = defineProps({
+    heading: String,
+    data: String
+})
 
 </script>

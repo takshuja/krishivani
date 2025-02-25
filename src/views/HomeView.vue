@@ -87,12 +87,70 @@
       <img src="../assets/dialog-pc.png" alt="failed to load image" class="lg:block md:block hidden mx-auto w-4/5 ">
     </div>
 
-
-
-
-
   </div>
 </template>
+
+
+
+<script setup lang="js">
+
+const info = [
+  {
+    articles: 1450,
+    users: false
+  },
+  {
+    articles: 400,
+    users: true
+  }
+]
+
+const announcements = [
+  {
+    title: "Call for Papers",
+    text: "Sustainable Farming Practices - We invite submissions for articles focusing on sustainable farming techniques and innovative agricultural solutions.",
+    date: 1639298400000, // Example Firebase timestamp (milliseconds)
+  },
+  {
+    title: "Upcoming Webinar",
+    text: "Precision Agriculture - Join us for an insightful webinar on the role of technology in precision agriculture.",
+    date: /* 1639880400000 */ Date.now() - (24 * 60 * 60 * 1000), // Example Firebase timestamp (milliseconds)
+  },
+  {
+    title: "New Research Funding Opportunity",
+    text: "Apply for funding for projects focused on innovative solutions to climate change in agriculture.",
+    date: Date.now() - (24 * 60 * 60 * 1000), // Announcement from one day ago
+  },
+  {
+    title: "Agricultural Tech Expo",
+    text: "Join us for the largest Agricultural Tech Expo of the year, showcasing the latest innovations in farm technology.",
+    date: Date.now() - (3 * 24 * 60 * 60 * 1000), // Announcement from three days ago
+  },
+  {
+    title: "International Conference on Agriculture",
+    text: "Register now for the International Conference on Agriculture to discuss the future of food production and sustainability.",
+    date: Date.now() - (48 * 60 * 60 * 1000), // Announcement from two days ago
+  },
+  {
+    title: "Soil Health Awareness Campaign",
+    text: "We are launching a nationwide soil health awareness campaign. Participate and spread the word!",
+    date: Date.now() - (12 * 60 * 60 * 1000), // Announcement from 12 hours ago
+  },
+  {
+    title: "AgriTech Startup Incubator",
+    text: "Applications are open for our AgriTech startup incubator program. Get mentorship and funding to bring your ideas to life.",
+    date: Date.now() - (1 * 24 * 60 * 60 * 1000), // Announcement from 1 day ago
+  },
+]
+
+
+function isNew(date) {
+  return date > Date.now() - (2 * 24 * 60 * 60 * 1000);
+}
+
+
+</script>
+
 
 
 <style scope>
@@ -126,68 +184,3 @@
   width: 100%;
 }
 </style>
-
-<script>
-export default {
-  data() {
-    return {
-      imgSrc: {
-        pc: '../assets/dialog-pc.png',
-        mb: '../assets/dialog-mb.png',
-      },
-      info: [
-        {
-          articles: 1450,
-          users: false
-        },
-        {
-          articles: 400,
-          users: true
-        }
-      ],
-      announcements: [
-        {
-          title: "Call for Papers",
-          text: "Sustainable Farming Practices - We invite submissions for articles focusing on sustainable farming techniques and innovative agricultural solutions.",
-          date: 1639298400000, // Example Firebase timestamp (milliseconds)
-        },
-        {
-          title: "Upcoming Webinar",
-          text: "Precision Agriculture - Join us for an insightful webinar on the role of technology in precision agriculture.",
-          date: /* 1639880400000 */ Date.now() - (24 * 60 * 60 * 1000), // Example Firebase timestamp (milliseconds)
-        },
-        {
-          title: "New Research Funding Opportunity",
-          text: "Apply for funding for projects focused on innovative solutions to climate change in agriculture.",
-          date: Date.now() - (24 * 60 * 60 * 1000), // Announcement from one day ago
-        },
-        {
-          title: "Agricultural Tech Expo",
-          text: "Join us for the largest Agricultural Tech Expo of the year, showcasing the latest innovations in farm technology.",
-          date: Date.now() - (3 * 24 * 60 * 60 * 1000), // Announcement from three days ago
-        },
-        {
-          title: "International Conference on Agriculture",
-          text: "Register now for the International Conference on Agriculture to discuss the future of food production and sustainability.",
-          date: Date.now() - (48 * 60 * 60 * 1000), // Announcement from two days ago
-        },
-        {
-          title: "Soil Health Awareness Campaign",
-          text: "We are launching a nationwide soil health awareness campaign. Participate and spread the word!",
-          date: Date.now() - (12 * 60 * 60 * 1000), // Announcement from 12 hours ago
-        },
-        {
-          title: "AgriTech Startup Incubator",
-          text: "Applications are open for our AgriTech startup incubator program. Get mentorship and funding to bring your ideas to life.",
-          date: Date.now() - (1 * 24 * 60 * 60 * 1000), // Announcement from 1 day ago
-        },
-      ],
-    }
-  },
-  methods: {
-    isNew(date) {
-      return date > Date.now() - (2 * 24 * 60 * 60 * 1000);
-    }
-  }
-}
-</script>

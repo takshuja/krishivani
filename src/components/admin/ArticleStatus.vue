@@ -15,7 +15,7 @@
             <li class="my-4">
                 <hr class="border-t border-black">
             </li>
-            <li v-for="user in filteredUsers" :key="user.id" class="my-1 even:bg-green-50 odd:bg-red-50">
+            <li v-for="user in props.filteredUsers" :key="user.id" class="my-1 even:bg-green-50 odd:bg-red-50">
                 <div class="grid grid-cols-5 text-start text-xl py-2 my-2 px-1 gap-x-20">
                     <span class="truncate" :title="user.firstname">{{ user.firstname }}</span>
                     <span class="truncate" :title="user.email">{{ user.email }}</span>
@@ -29,7 +29,18 @@
 </template>
 
 
-<script>
+<script setup lang="js">
+const props = defineProps({
+    filteredUsers: {
+        required: true,
+    }
+})
+
+
+
+</script>
+
+<!-- <script>
 export default {
     props: {
         filteredUsers: {
@@ -38,4 +49,4 @@ export default {
     }
 }
 
-</script>
+</script> -->

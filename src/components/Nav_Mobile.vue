@@ -1,12 +1,12 @@
 <template>
     <nav class="lg:hidden flex flex-col bg-black text-[#ddd]">
-        <div class="justify-between items-center text-xl" :class="nav_expanded">
+        <div class="justify-between items-center text-xl" :class="navExpanded">
             <label>K R I S H I V A N I</label>
             <span @click="toggleResponsiveNav"> <i class="fa-solid fa-bars"></i></span>
         </div>
 
 
-        <div class="expanded-nav flex flex-col" :class="expanded_nav">
+        <div class="expanded-nav flex flex-col" :class="expandedNav">
             <div class="flex justify-between items-center text-xl">
                 <label>K R I S H I V A N I</label>
                 <span @click="toggleResponsiveNav"> <i class="fa-solid fa-xmark"></i></span>
@@ -19,12 +19,6 @@
                             {{ route.label }}
                         </router-link>
                     </li>
-                    <!-- <li><router-link :to="{ name: 'home' }">Home</router-link></li>
-                    <li><router-link :to="{ name: 'instructions' }">Instructions</router-link></li>
-                    <li><router-link :to="{ name: 'submission' }">Submission</router-link></li>
-                    <li><router-link :to="{ name: 'home' }">Publications</router-link></li>
-                    <li><router-link :to="{ name: 'about' }">About</router-link></li>
-                    <li><router-link :to="{ name: 'home' }">Contact</router-link></li> -->
                 </ul>
             </div>
 
@@ -56,70 +50,58 @@
 </template>
 
 
-<script>
+<script setup lang="js">
+// Imports
 import { authStore } from '@/stores/authStore';
+import { computed, onMounted, ref, watch } from 'vue';
 import { navRoutes } from '@/utils/routes';
+import { useRoute, onBeforeRouteUpdate, useRouter } from 'vue-router';
 
-export default {
-    data() {
-        return {
-            isLoggedIn: false,
-            store: authStore(),
-            nav_expanded: "flex",
-            expanded_nav: "hidden",
-            isExpanded: false,
-            navroutes: navRoutes,
-        }
-    },
-    async mounted() {
-        if (this.store.user == null) await this.store.user;
-        // this.isLoggedIn = this.store.isAuthenticated;
-    },
+// Router and route
+const route = useRoute();
+const router = useRouter();
+
+// constants and variables
+const isLoggedIn = computed(() => store.isAuthenticated);
+const store = authStore()
+const navExpanded = ref('flex')
+const expandedNav = ref('hidden')
+const isExpanded = ref(false)
+const navroutes = navRoutes
 
 
-    computed: {
-        isLoggedIn() {
-            return this.store.isAuthenticated;
-        }
-    },
-
-    methods: {
-        async logout() {
-            await this.store.logout();
-            // useRouter().clearRoutes();
-            this.$router.push('/');
-        },
-        toggleResponsiveNav() {
-            this.isExpanded = !this.isExpanded;
-            this.nav_expanded = (this.isExpanded) ? "hidden" : "flex";
-            this.expanded_nav = (!this.isExpanded) ? "hidden" : "flex";
-
-        },
-
-    },
-
-
-    watch: {
-        $route(to, from) {
-            if (this.isExpanded) {
-                this.toggleResponsiveNav();
-            }
-        }
-    },
-    beforeRouteEnter(to, from, next) {
-        next((vm) => {
-            console.log(vm.isExpanded)
-        })
-    },
-    beforeRouteUpdate() {
-        console.log('BEFORE ROUTE UPDATE')
-        this.isExpanded ? this.toggleResponsiveNav() : null
-    },
-    mounted() {
-        this.isExpanded ? this.toggleResponsiveNav() : null
-
-    },
-
+// function to toggle navbar visibility
+function toggleResponsiveNav() {
+    isExpanded.value = !isExpanded.value
+    navExpanded.value = isExpanded.value ? "hidden" : "flex"
+    expandedNav.value = !isExpanded.value ? "hidden" : "flex"
 }
+
+
+// function to handle logout
+async function logout() {
+    await store.logout()
+    router.push("/")
+}
+
+
+// function to hide navbar on route change
+watch(route, (to, from) => {
+    if (isExpanded.value) {
+        toggleResponsiveNav()
+    }
+})
+
+
+onBeforeRouteUpdate(() => {
+    isExpanded.value ? toggleResponsiveNav() : null
+})
+
+
+// fetch user data on mount
+onMounted(async () => {
+    if (isExpanded.value) toggleResponsiveNav()
+    if (store.user == null) await store.getUser();
+})
 
 </script>

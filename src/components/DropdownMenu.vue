@@ -30,11 +30,11 @@
     </Menu>
 </template>
 
-<script setup>
-import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
-import { ChevronDownIcon } from '@heroicons/vue/20/solid'
+<script setup lang="js">
 import { reactive } from 'vue';
 import { useUploadStore } from '@/stores/uploadStore'
+import { ChevronDownIcon } from '@heroicons/vue/20/solid'
+import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 
 const store = useUploadStore()
 
@@ -64,11 +64,4 @@ function setOption(discipline) {
     selectedOption = discipline;
     store.setDiscipline(discipline);
 }
-
-
-
-
-
-
-
 </script>

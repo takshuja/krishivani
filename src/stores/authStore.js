@@ -2,7 +2,6 @@ import { defineStore } from "pinia";
 import { firebase_auth, firebase_firestore } from '@/firebase'
 import { getDoc, doc, setDoc } from "firebase/firestore";
 import { browserLocalPersistence, createUserWithEmailAndPassword, GoogleAuthProvider, setPersistence, signInWithEmailAndPassword } from "firebase/auth";
-import { deleteUser } from "firebase/auth";
 
 
 export const authStore = defineStore('authStore', {

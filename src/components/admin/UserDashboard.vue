@@ -4,7 +4,7 @@
 
 
     <div class="px-4 py-12 text-[#767472] border w-full">
-        
+
         <!-- Heading -->
         <h1 class="font-medium text-start text-2xl">
             Dashboard
@@ -15,14 +15,30 @@
         </div>
 
         <div>
-            <SearchBar :enableUpdate="true"  />
+            <SearchBar :enableUpdate="true" />
         </div>
     </div>
 
-
-
-
 </template>
+
+
+<script setup lang="js">
+import { computed, onMounted, ref } from 'vue';
+import InfoCard from './InfoCard.vue';
+import SearchBar from './SearchBar.vue';
+import { adminStore } from '@/stores/adminStore';
+
+const store = adminStore()
+
+const isPopupShown = ref(true);
+
+
+onMounted(async () => await store.getUsers());
+
+const users = computed(() => store.users)
+const usersLength = computed(() => store.users.length)
+
+</script>
 
 
 <style scoped>
@@ -30,37 +46,3 @@
     backdrop-filter: blur(10px);
 }
 </style>
-
-
-<script>
-import InfoCard from './InfoCard.vue';
-import SearchBar from './SearchBar.vue';
-import { adminStore } from '@/stores/adminStore';
-export default {
-    data() {
-        return {
-            popupShown: true,
-        }
-    },
-    setup() {
-        const store = adminStore();
-        return { store };
-    },
-    components: {
-        InfoCard,
-        SearchBar,
-    },
-    async created() {
-        await this.store.getUsers();
-    },
-    computed: {
-        users() {
-            return this.store.users;
-        },
-        usersLength() {
-            return this.store.users.length;
-        }
-    },
-
-}
-</script>

@@ -64,57 +64,45 @@
     </div>
 </template>
 
-<script>
-import { adminStore } from '@/stores/adminStore';
-import ArticleStatus from './ArticleStatus.vue';
-import { deleteUser } from 'firebase/auth';
-import { authStore } from '@/stores/authStore';
+<script setup>
+import { computed } from 'vue';
+import { adminStore as useAdminStore } from '@/stores/adminStore'; // Assuming Pinia
+import { authStore as useAuthStore } from '@/stores/authStore';
+import ArticleStatus from '@/components/admin/ArticleStatus.vue';
 
-export default {
-    props: {
-        searchQuery: {
-            type: String,
-            required: true,
-        },
-        page: {
-            type: String,
-            default: 'details'
-        }
+const props = defineProps({
+    searchQuery: {
+        type: String,
+        required: true,
     },
+    page: {
+        type: String,
+        default: 'details',
+    },
+});
 
-    components: {
-        ArticleStatus,
-    },
-    setup() {
-        const store = adminStore();
-        const authstore = authStore();
-        return { store, authstore };
-    },
-    methods: {
-        formatTimestamp(timestamp) {
-            if (!timestamp || !timestamp.toDate) return 'Invalid Date';
-            const date = timestamp.toDate();
-            const day = String(date.getDate()).padStart(2, '0');
-            const month = String(date.getMonth() + 1).padStart(2, '0');
-            const year = date.getFullYear();
-            return `${day}/${month}/${year}`;
-        },
+const store = useAdminStore();
+const authStore = useAuthStore();
 
-        async deleteUser() {
-            // TODO: Implement it on the server side and
-            // then make a fetch request
-        }
-    },
-    computed: {
+// ✅ Computed property
+const filteredUsers = computed(() =>
+    store.users.filter(
+        (user) =>
+            user.firstname.toLowerCase().includes(props.searchQuery.toLowerCase()) ||
+            user.email.toLowerCase().includes(props.searchQuery.toLowerCase())
+    )
+);
 
-
-        filteredUsers() {
-            return this.store.users.filter(
-                (user) =>
-                    user.firstname.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-                    user.email.toLowerCase().includes(this.searchQuery.toLowerCase())
-            );
-        },
-    },
+// ✅ Function for formatting timestamps
+const formatTimestamp = (timestamp) => {
+    if (!timestamp || !timestamp.toDate) return 'Invalid Date';
+    const date = timestamp.toDate();
+    return `${String(date.getDate()).padStart(2, '0')}/${String(date.getMonth() + 1).padStart(2, '0')}/${date.getFullYear()}`;
 };
+
+// ✅ Async function placeholder for deleting a user
+const deleteUser = async () => {
+    // TODO: Implement it on the server side and then make a fetch request
+};
+
 </script>

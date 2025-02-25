@@ -33,39 +33,29 @@
     </nav>
 </template>
 
-<script>
+<script setup lang="js">
 import { authStore } from '@/stores/authStore';
-import { navRoutes } from '@/utils/routes';
+import { navRoutes as routes } from '@/utils/routes';
+import { computed, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
 
-export default {
-    data() {
-        return {
-            isLoggedIn: false,
-            store: authStore(),
-            navroutes: navRoutes,
-        }
-    },
-    async mounted() {
-        if (this.store.user == null) await this.store.user;
-    },
+const store = authStore();
+const router = useRouter();
+const navroutes = routes;
+
+const isLoggedIn = computed(() => store.isAuthenticated);
 
 
-    computed: {
-        isLoggedIn() {
-            return this.store.isAuthenticated;
-        }
-    },
+onMounted(async () => {
+    if (store.user == null) await store.getUser();
+})
 
-    methods: {
-        async logout() {
-            await this.store.logout();
-            this.$router.push('/');
-        }
-    }
+async function logout() {
+    await store.logout();
+    router.push('/');
 }
 
 </script>
-
 
 <style scoped>
 .nav-links>li {
